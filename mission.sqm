@@ -1,0 +1,99 @@
+version=53;
+class EditorData
+{
+	moveGridStep=1;
+	angleGridStep=0.2617994;
+	scaleGridStep=1;
+	autoGroupingDist=10;
+	toggles=1;
+	class ItemIDProvider
+	{
+		nextID=52;
+	};
+	class Camera
+	{
+		pos[]={5042.1851,70.069992,4578.3301};
+		dir[]={0.82892269,-0.30599728,0.46849045};
+		up[]={0.26645347,0.95194668,0.15059334};
+		aside[]={0.49208525,-8.8324305e-007,-0.87068492};
+	};
+};
+binarizationWanted=0;
+addons[]=
+{
+	"FGN_RU_Troops"
+};
+class AddonsMetaData
+{
+	class List
+	{
+		items=1;
+		class Item0
+		{
+			className="FGN_RU_Troops";
+			name="FGN_RU_Troops";
+		};
+	};
+};
+randomSeed=970925;
+class ScenarioData
+{
+	author="Dunecat";
+};
+class Mission
+{
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.65452909;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.65452909;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		rainForced=1;
+		year=1994;
+		month=12;
+		day=27;
+		hour=24;
+		minute=0;
+		startFogDecay=0.014;
+		forecastFogDecay=0.014;
+	};
+	class Entities
+	{
+		items=1;
+		class Item0
+		{
+			dataType="Group";
+			side="East";
+			class Entities
+			{
+				items=1;
+				class Item0
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={4677.9858,23.252312,4068.2891};
+					};
+					side="East";
+					flags=7;
+					class Attributes
+					{
+						isPlayer=1;
+					};
+					id=32;
+					type="FGN_RuMSV_Rifleman";
+					atlOffset=3.0517578e-005;
+				};
+			};
+			class Attributes
+			{
+			};
+			id=31;
+			atlOffset=3.0517578e-005;
+		};
+	};
+};

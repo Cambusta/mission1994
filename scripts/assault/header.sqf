@@ -1,0 +1,1 @@
+call compile preprocessFileLineNumbers "scripts\functions_waves.sqf";
