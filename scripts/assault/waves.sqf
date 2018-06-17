@@ -1,20 +1,20 @@
-dnct_createWave = {
+dnct_fnc_createWave = {
 	_center = param[0, [0,0,0]];
 	_waveNumber = param[2, 0];
 
-	//_units = [_center, _safezone, INFANTRY_BASIC, 10] call dnct_createSquad;
-	_units = [_center, _safezone, INFANTRY_BASIC] call dnct_createSquadOrganized;
+	_units = [_center, INFANTRY_BASIC, 10] call dnct_fnc_createCrowd;
+	//_units = [_center, INFANTRY_BASIC] call dnct_fnc_createSquad;
 	hint str(_units);
 };
 
-dnct_createSquad = {
+dnct_fnc_createSquad = {
 	_center = param[0, [0,0,0]];
 	_unitClasses = param[2, []];
 
 	_location = [_center, SAFEZONE_AREA, SAFEZONE_AREA_EXTENSION, 3] call BIS_fnc_findSafePos;
 	_squad = [_location, ENEMY_SIDE, INFANTRY_BASIC, [], [], [], [], [6, 0.7]] call BIS_fnc_spawnGroup;
 
-	_groupWaypoint = _squad addWaypoint [getPos player, 0];
+	_groupWaypoint = _squad addWaypoint [call dnct_fnc_getRandomPlayerPos, 0];
 	_groupWaypoint setWaypointCombatMode "RED";
 	_groupWaypoint setWaypointType "SAD";
 	_groupWaypoint setWaypointSpeed "FULL";
@@ -22,10 +22,10 @@ dnct_createSquad = {
 	_squad
 };
 
-dnct_createCrowd = {
+dnct_fnc_createCrowd = {
 	_center = param[0, [0,0,0]];
-	_unitClases = param[2, []];
-	_unitCount = param[3, 0];
+	_unitClases = param[1, []];
+	_unitCount = param[2, 0];
 		
 	_location = [_center, SAFEZONE_AREA, SAFEZONE_AREA_EXTENSION, 3] call BIS_fnc_findSafePos;
 
@@ -37,13 +37,13 @@ dnct_createCrowd = {
 		_unit = _group createUnit [_class, _location, [], 0.5, "NONE"];
 		sleep 0.5;
 
+		// Simulate "berserk mode" for some of the unorganized troops
 		if (random 1 < 0.2) then {
 			_unit disableAI "AUTOCOMBAT";
 		};
 
-		//_unit doMove (getPos (selectRandom playableUnits));
-		_unit doMove (getPos player);
-		_crowd append [_unit];
+		_unit doMove (call dnct_fnc_getRandomPlayerPos);
+		_crowd pushBack _unit;
 	};
 
 	_crowd

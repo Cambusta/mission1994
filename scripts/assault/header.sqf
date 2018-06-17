@@ -1,1 +1,2 @@
-call compile preprocessFileLineNumbers "scripts\functions_waves.sqf";
+call compile preprocessFileLineNumbers "scripts\assault\common.sqf";
+call compile preprocessFileLineNumbers "scripts\assault\waves.sqf";
