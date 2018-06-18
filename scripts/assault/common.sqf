@@ -1,12 +1,18 @@
 dnct_fnc_getRandomPlayerPos = {
-	_position = getPos ( selectRandom ((call BIS_fnc_listPlayers) select { alive _x }) );
+	_alivePlayers = (call BIS_fnc_listPlayers) select { alive _x };
+	_position = [0,0,0];
+
+	if (count _alivePlayers > 0) then {
+		_position = getPos (selectRandom _alivePlayers);
+	};
+
 	_position
 };
 
 dnct_fnc_getNearestPlayerPos = {
 	_unit = param[0, objNull];
 
-	_alivePlayers = (call BIS_fnc_listPlayers) select { alive _x; };
+	_alivePlayers = (call BIS_fnc_listPlayers) select { alive _x };
 
 	_closestDistance = 900000;
 	_closestPosition = [0,0,0];
@@ -24,6 +30,19 @@ dnct_fnc_getNearestPlayerPos = {
 	_closestPosition
 };
 
+dnct_fnc_groupKnowsAboutPlayers = {
+	_group = param[0, grpNull];
+
+	_alivePlayers = (call BIS_fnc_listPlayers) select { alive _x };
+
+	_knows = false;
+	{
+		if((_group knowsAbout _x) == 4) exitWith { _knows = true; };
+	} forEach _alivePlayers;
+
+	_knows;
+};
+
 dnct_fnc_removeAllGroupWaypoints = {
 	_group = param[0, grpNull];
 
@@ -35,14 +54,18 @@ dnct_fnc_removeAllGroupWaypoints = {
 dnct_fnc_assignGroupSADWaypoint = {
 	_group = param[0, grpNull];
 
-	_group call dnct_fnc_removeAllGroupWaypoints;
-	_groupWaypoint = _group addWaypoint [(leader _group) call dnct_fnc_getNearestPlayerPos, 0];
-	_groupWaypoint setWaypointCombatMode "RED";
-	_groupWaypoint setWaypointType "SAD";
-	_groupWaypoint setWaypointSpeed "FULL";
+	_position = (leader _group) call dnct_fnc_getNearestPlayerPos;
+	
+	if ( !(_position isEqualTo [0,0,0]) ) then {
+		_group call dnct_fnc_removeAllGroupWaypoints;
+		_groupWaypoint = _group addWaypoint [_position, 0];
+		_groupWaypoint setWaypointCombatMode "RED";
+		_groupWaypoint setWaypointType "SAD";
+		_groupWaypoint setWaypointSpeed "FULL";
+	};
 };
 
-dnct_fnc_haveAlive = {
+dnct_fnc_hasAlive = {
 	_units = param[0, []];
 
 	if (typeName _units != "ARRAY") then {
@@ -58,4 +81,33 @@ dnct_fnc_haveAlive = {
 	{ _hasAlive = true; };
 
 	_hasAlive
+};
+
+dnct_fnc_getEnemyGroups = {
+	_enemyGroups = [];
+
+	{
+		if (side _x == ENEMY_SIDE
+		&& [units _x] call dnct_fnc_hasAlive) then {
+			_enemyGroups pushBack _x;
+		}
+	} forEach allGroups;
+
+	_enemyGroups;
+};
+
+dnct_fnc_getMissionLocation = {
+	_position = getMarkerPos "besiegedLocation";
+	_position
+};
+
+dnct_fnc_preventCombatIdling = {
+	_group = param[0, grpNull];
+
+	while { [units _group] call dnct_fnc_hasAlive } do 
+	{
+		sleep 30;
+		if (!([_group] call dnct_fnc_groupKnowsAboutPlayers)) then 
+		{ _group setBehaviour "SAFE"; };
+	};
 };

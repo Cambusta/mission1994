@@ -8,27 +8,39 @@ class EditorData
 	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=52;
+		nextID=55;
+	};
+	class MarkerIDProvider
+	{
+		nextID=1;
 	};
 	class Camera
 	{
-		pos[]={5042.1851,70.069992,4578.3301};
-		dir[]={0.82892269,-0.30599728,0.46849045};
-		up[]={0.26645347,0.95194668,0.15059334};
-		aside[]={0.49208525,-8.8324305e-007,-0.87068492};
+		pos[]={4676.856,24.707397,4064.4241};
+		dir[]={0.93121684,0.036139388,-0.36300454};
+		up[]={-0.03354229,0.99929506,0.013073163};
+		aside[]={-0.36324891,-2.0517618e-006,-0.9318338};
 	};
 };
 binarizationWanted=0;
 addons[]=
 {
+	"A3_Ui_F",
 	"FGN_RU_Troops"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=1;
+		items=2;
 		class Item0
+		{
+			className="A3_Ui_F";
+			name="Arma 3 - User Interface";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item1
 		{
 			className="FGN_RU_Troops";
 			name="FGN_RU_Troops";
@@ -46,25 +58,36 @@ class Mission
 	{
 		timeOfChanges=1800.0002;
 		startWeather=0.65452909;
-		startWind=0.1;
+		startFog=0.60000002;
+		startWind=0.74724692;
 		startWaves=0.1;
 		forecastWeather=0.65452909;
-		forecastWind=0.1;
+		forecastFog=0.60000002;
+		forecastWind=0.75005651;
 		forecastWaves=0.1;
 		forecastLightnings=0.1;
 		rainForced=1;
+		windForced=1;
 		year=1994;
 		month=12;
-		day=27;
-		hour=24;
-		minute=0;
-		startFogDecay=0.014;
-		forecastFogDecay=0.014;
+		day=26;
+		hour=23;
+		minute=29;
+		startFogDecay=0.0099999998;
+		forecastFogDecay=0.0099999998;
 	};
 	class Entities
 	{
-		items=1;
+		items=2;
 		class Item0
+		{
+			dataType="Marker";
+			position[]={4678.3193,18.515499,4068.8826};
+			name="besiegedLocation";
+			type="Empty";
+			id=52;
+		};
+		class Item1
 		{
 			dataType="Group";
 			side="East";
