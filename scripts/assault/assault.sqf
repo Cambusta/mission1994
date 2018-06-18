@@ -1,5 +1,5 @@
 call compile preprocessFileLineNumbers "scripts\assault\events.sqf";
-call compile preprocessFileLineNumbers "scripts\assault\common.sqf";
+call compile preprocessFileLineNumbers "scripts\assault\helpers.sqf";
 call compile preprocessFileLineNumbers "scripts\assault\waves.sqf";
 
 // Global variables controlling assault state

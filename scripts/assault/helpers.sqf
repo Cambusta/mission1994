@@ -90,10 +90,10 @@ dnct_fnc_getEnemyGroups = {
 		if (side _x == ENEMY_SIDE
 		&& [units _x] call dnct_fnc_hasAlive) then {
 			_enemyGroups pushBack _x;
-		}
+		};
 	} forEach allGroups;
 
-	_enemyGroups;
+	_enemyGroups
 };
 
 dnct_fnc_getMissionLocation = {
