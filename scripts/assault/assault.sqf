@@ -17,14 +17,14 @@ dnct_fnc_assault = {
 	sleep 10;
 
 	waveNumber = 1;
-	publicVariable "_waveNumber";
+	publicVariable "waveNumber";
 
 	while { assaultActive } do
 	{
 		[_center, waveNumber] call dnct_fnc_wave;		
 		
 		waveNumber = waveNumber + 1;
-		publicVariable "_waveNumber";
+		publicVariable "waveNumber";
 
 		sleep WAVE_DELAY;
 	};
