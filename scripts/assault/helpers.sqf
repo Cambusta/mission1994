@@ -43,10 +43,10 @@ dnct_fnc_groupKnowsAboutPlayers = {
 	_knows;
 };
 
-dnct_fnc_removeAllGroupWaypoints = {
+dnct_fnc_removeAllButLastGroupWaypoints = {
 	_group = param[0, grpNull];
 
-	while { (count waypoints _group) > 0 } do {
+	while { (count waypoints _group) > 1 } do {
 		deleteWaypoint ((waypoints _group) select 0);
 	};
 };
@@ -57,11 +57,13 @@ dnct_fnc_assignGroupSADWaypoint = {
 	_position = (leader _group) call dnct_fnc_getNearestPlayerPos;
 	
 	if ( !(_position isEqualTo [0,0,0]) ) then {
-		_group call dnct_fnc_removeAllGroupWaypoints;
-		_groupWaypoint = _group addWaypoint [_position, 0];
+		_waypointCount = count waypoints _group;		
+		_groupWaypoint = _group addWaypoint [_position, 0, _waypointCount];
 		_groupWaypoint setWaypointCombatMode "RED";
 		_groupWaypoint setWaypointType "SAD";
 		_groupWaypoint setWaypointSpeed "FULL";
+
+		_group call dnct_fnc_removeAllButLastGroupWaypoints;
 	};
 };
 
