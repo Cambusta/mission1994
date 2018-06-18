@@ -101,7 +101,14 @@ dnct_fnc_getMissionLocation = {
 	_position
 };
 
-dnct_fnc_preventCombatIdling = {
+dnct_fnc_preventIdling = {
+	_units = param[0, []];
+	
+	{ _x spawn dnct_fnc_preventStucking; } foreach _units;
+	{ _x spawn dnct_fnc_preventCowardice; } foreach call dnct_fnc_getEnemyGroups;
+};
+
+dnct_fnc_preventCowardice = {
 	_group = param[0, grpNull];
 
 	while { [units _group] call dnct_fnc_hasAlive } do 
@@ -109,5 +116,25 @@ dnct_fnc_preventCombatIdling = {
 		sleep 30;
 		if (!([_group] call dnct_fnc_groupKnowsAboutPlayers)) then 
 		{ _group setBehaviour "SAFE"; };
+	};
+};
+
+dnct_fnc_preventStucking = {
+	_unit = param[0, objNull];
+
+	_oldPosition = getPos _unit;
+
+	while { alive _unit } do 
+	{
+		sleep 180;
+		_newPosition = getPos _unit;
+
+		if(_newPosition distance _oldPosition < 5) then {
+			_safePos = [(getpos _unit), 15, 100, 10] call BIS_fnc_findSafePos;
+			_unit setPos _safePos;
+			_oldPosition = getPos _unit;
+		} else {
+			_oldPosition = _newPosition;
+		};
 	};
 };
