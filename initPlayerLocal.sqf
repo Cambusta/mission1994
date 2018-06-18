@@ -1,0 +1,1 @@
+[] execVM "scripts\snow\goon_snowstorm.sqf";
