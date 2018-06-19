@@ -125,8 +125,9 @@ dnct_fnc_preventStucking = {
 		sleep 180;
 		_newPosition = getPos _unit;
 
-		if(_newPosition distance _oldPosition < 5) then {
-			_safePos = [(getpos _unit), 15, 100, 10] call BIS_fnc_findSafePos;
+		if (_newPosition distance _oldPosition < 5
+		&& !([group _unit] call dnct_fnc_groupKnowsAboutPlayers)) then {
+			_safePos = [(getpos _unit), 10, 50, 10] call BIS_fnc_findSafePos;
 			_unit setPos _safePos;
 			_oldPosition = getPos _unit;
 		} else {
