@@ -126,8 +126,6 @@ dnct_fnc_preventUnitCowardice = {
 
 		if (_currentPosition distance _previousPosition < 5
 		&& !([group _unit] call dnct_fnc_groupKnowsAboutPlayers)) then {
-			player sideChat format["Unstucking %1", _unit];
-
 			_unit spawn dnct_fnc_pushUnit;
 		};
 
@@ -152,10 +150,11 @@ dnct_fnc_pushUnit = {
 	_unit setSpeedMode "FULL";
 	_unit doMove _pos;
 
-	[getPos _unit] call dnct_fnc_markPosition;
-	[_pos, "hd_flag"] call dnct_fnc_markPosition;
+	// Debug stuff
+	// [getPos _unit] call dnct_fnc_markPosition;
+	// [_pos, "hd_flag"] call dnct_fnc_markPosition;
 
-	for "_i" from 0 to 20 do {
+	for "_i" from 0 to 30 do {
 		_unit setAnimSpeedCoef 3;
 		sleep 0.2;
 	};
@@ -167,4 +166,35 @@ dnct_fnc_pushUnit = {
 
 	_unit setAnimSpeedCoef 1;	
 	_unit setBehaviour "AWARE";
+};
+
+dnct_fnc_selectWithProbability = {
+	_items = param[0, []];
+
+	_probabilitySum = 0;
+	{ _probabilitySum = _probabilitySum + (_x select 1); } forEach _items;
+
+	_random = random _probabilitySum;
+	_cumulativeProbability = 0;
+
+	_currentIndex = 0;
+	_resultIndex = -1;
+	_result = objNull;
+
+	while { (_resultIndex == -1) && (_currentIndex < count _items) } do {
+		_currItem = _items select _currentIndex;
+		_itemProbability = _currItem select 1;
+
+		_cumulativeProbability = _cumulativeProbability + _itemProbability;
+
+		if (_random <= _cumulativeProbability) then
+		{ _resultIndex = _currentIndex; };
+
+		_currentIndex = _currentIndex + 1;
+	};
+
+	if (_resultIndex != -1) then 
+	{ _result = ((_items select _resultIndex) select 0); };
+
+	_result
 };

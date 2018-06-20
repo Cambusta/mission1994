@@ -35,12 +35,28 @@ dnct_fnc_createWaveUnits = {
 	_waveUnits
 };
 
+dnct_fnc_generateRoster = {
+	_unitTypes = param[0, []];
+	_unitCount = param[1, 4];
+
+	_roster = [];
+
+	for "_i" from 1 to _unitCount do {
+		_role = [_unitTypes] call dnct_fnc_selectWithProbability;
+		_roster pushBack _role;
+	};
+
+	_roster
+};
+
 dnct_fnc_createSquad = {
 	_center = param[0, [0,0,0]];
-	_unitClasses = param[2, []];
+	_unitClasses = param[1, []];
+	_unitCount = param[2, 0];
 
 	_location = [_center, SAFEZONE_AREA, SAFEZONE_AREA_EXTENSION, 10] call BIS_fnc_findSafePos;
-	_squad = [_location, ENEMY_SIDE, INFANTRY_BASIC, [], [], [], [], [6, 0.7]] call BIS_fnc_spawnGroup;
+	_roster = [_unitClasses, _unitCount] call dnct_fnc_generateRoster;
+	_squad = [_location, ENEMY_SIDE, _roster] call BIS_fnc_spawnGroup;
 	_squad allowFleeing 0;
 	_squad spawn dnct_fnc_assignGroupSADWaypoint; 
 
@@ -50,16 +66,17 @@ dnct_fnc_createSquad = {
 
 dnct_fnc_createCrowd = {
 	_center = param[0, [0,0,0]];
-	_unitClases = param[1, []];
+	_unitClasses = param[1, []];
 	_unitCount = param[2, 0];
 		
 	_location = [_center, SAFEZONE_AREA, SAFEZONE_AREA_EXTENSION, 10] call BIS_fnc_findSafePos;
-
+	_roster = [_unitClasses, _unitCount] call dnct_fnc_generateRoster;	
 	_crowd = [];
 
-	for "_i" from 1 to _unitCount do {
+	{
 		_group = createGroup [ENEMY_SIDE, true];
-		_class = selectRandom _unitClases;
+		_class = _x;
+
 		_unit = _group createUnit [_class, _location, [], 0.5, "NONE"];
 		sleep 0.5;
 
@@ -71,7 +88,7 @@ dnct_fnc_createCrowd = {
 		_group allowFleeing 0;
 		_group spawn dnct_fnc_assignGroupSADWaypoint;
 		_crowd pushBack _unit;
-	};
+	} foreach _roster;
 
 	_crowd
 };
