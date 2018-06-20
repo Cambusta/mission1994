@@ -28,7 +28,7 @@ dnct_fnc_createWaveUnits = {
 
 	_waveUnits = [];
 	for "_i" from 1 to _waveNumber do {
-		_units = [_center, INFANTRY_BASIC, 10] call dnct_fnc_createCrowd;
+		_units = [_center, INFANTRY_BASIC, 10] call dnct_fnc_createSquad;
 		_waveUnits append _units;
 	};
 

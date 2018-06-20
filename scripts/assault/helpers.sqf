@@ -55,7 +55,7 @@ dnct_fnc_assignGroupSADWaypoint = {
 			_groupWaypoint = _group addWaypoint [_position, 1];
 			_groupWaypoint setWaypointStatements ["false", ""];
 			_groupWaypoint setWaypointCombatMode "RED";
-			_groupWaypoint setWaypointType "SAD";
+			_groupWaypoint setWaypointType "MOVE";
 			_groupWaypoint setWaypointSpeed "FULL";
 		};
 	};
@@ -97,41 +97,74 @@ dnct_fnc_getMissionLocation = {
 	_position
 };
 
+dnct_fnc_markPosition = {
+	_position = param[0, []];
+	_markerType = param[1, "Select"];
+
+	_name = format["marker%1_%2", time, floor (random 10000)];
+	_marker = createMarker [_name, _position];
+	_marker setMarkerType _markerType;
+	_marker
+};
+
 dnct_fnc_preventIdling = {
 	_units = param[0, []];
-	
-	{ _x spawn dnct_fnc_preventStucking; } foreach _units;
-	{ _x spawn dnct_fnc_preventCowardice; } foreach call dnct_fnc_getEnemyGroups;
+
+	{ _x spawn dnct_fnc_preventUnitCowardice; } foreach _units;
 };
 
-dnct_fnc_preventCowardice = {
-	_group = param[0, grpNull];
-
-	while { [units _group] call dnct_fnc_hasAlive } do 
-	{
-		sleep 30;
-		if (!([_group] call dnct_fnc_groupKnowsAboutPlayers)) then 
-		{ _group setBehaviour "SAFE"; };
-	};
-};
-
-dnct_fnc_preventStucking = {
+dnct_fnc_preventUnitCowardice = {
 	_unit = param[0, objNull];
 
-	_oldPosition = getPos _unit;
+	_previousPosition = getPos _unit;
+	_delay = 120;
 
+	sleep _delay;
 	while { alive _unit } do 
 	{
-		sleep 180;
-		_newPosition = getPos _unit;
+		_currentPosition = getPos _unit;
 
-		if (_newPosition distance _oldPosition < 5
+		if (_currentPosition distance _previousPosition < 5
 		&& !([group _unit] call dnct_fnc_groupKnowsAboutPlayers)) then {
-			_safePos = [(getpos _unit), 10, 50, 10] call BIS_fnc_findSafePos;
-			_unit setPos _safePos;
-			_oldPosition = getPos _unit;
-		} else {
-			_oldPosition = _newPosition;
+			player sideChat format["Unstucking %1", _unit];
+
+			_unit spawn dnct_fnc_pushUnit;
 		};
+
+		_previousPosition = _currentPosition;
+		sleep _delay;
 	};
+};
+
+dnct_fnc_pushUnit = {
+	_unit = param[0];
+
+	_pos = call dnct_fnc_getNearestPlayerPos;
+
+	_unit disableAI "TARGET";
+	_unit disableAI "SUPPRESSION";
+	_unit disableAI "COVER";
+	_unit disableAI "AUTOCOMBAT";
+
+	sleep 1;
+
+	_unit setBehaviour "CARELESS";
+	_unit setSpeedMode "FULL";
+	_unit doMove _pos;
+
+	[getPos _unit] call dnct_fnc_markPosition;
+	[_pos, "hd_flag"] call dnct_fnc_markPosition;
+
+	for "_i" from 0 to 20 do {
+		_unit setAnimSpeedCoef 3;
+		sleep 0.2;
+	};
+
+	_unit enableAI "TARGET";
+	_unit enableAI "SUPPRESSION";
+	_unit enableAI "COVER";
+	_unit enableAI "AUTOCOMBAT";
+
+	_unit setAnimSpeedCoef 1;	
+	_unit setBehaviour "AWARE";
 };
