@@ -1,80 +1,38 @@
 dnct_fnc_wave = {
 	_center = param[0, [0,0,0]];
-	_waveNumber = param[1, 0];
+	_attackNumber = param[1, 0];
+	_waveNumber = param[2, 0];
 
-	[_waveNumber] spawn dnct_fnc_onWaveStart;
+	// Don't start the wave if there's no alive players
+	if ( !([(call BIS_fnc_listPlayers)] call dnct_fnc_hasAlive) ) exitWith {};
 
-	_createdUnits = [_center, _waveNumber] call dnct_fnc_createWaveUnits;
+	[_attackNumber, _waveNumber] spawn dnct_on_waveStart;
+
+	_createdUnits = [_center, _attackNumber] call dnct_fnc_createWaveUnits;
 	[_createdUnits] spawn dnct_fnc_preventIdling;
 
-	// Main wave loop
 	while { [_createdUnits] call dnct_fnc_hasAlive && [(call BIS_fnc_listPlayers)] call dnct_fnc_hasAlive } do 
 	{
 		sleep 15;
 		{ _x spawn dnct_fnc_assignGroupSADWaypoint; } foreach call dnct_fnc_getEnemyGroups;
 	};
 
-	// Handle wave completion
-	if ([(call BIS_fnc_listPlayers)] call dnct_fnc_hasAlive) then {
-		[_waveNumber, true] spawn dnct_fnc_onWaveEnd;
-	} else {
-		[_waveNumber, false] spawn dnct_fnc_onWaveEnd;
-	};
+	[_attackNumber, _waveNumber] spawn dnct_on_waveEnd;
 };
 
 dnct_fnc_createWaveUnits = {
 	_center = param[0, [0,0,0]];
-	_waveNumber = param[1, 0];
+	_attackNumber = param[1, 0];
+
+	_waveStructure = _attackNumber call dnct_fnc_getWaveStucture;
+	_crowds = _waveStructure select 0;
+	_squads = _waveStructure select 1;
+	_crowdInfantryTypes = _waveStructure select 2;
+	_squadInfantryTypes = _waveStructure select 3;	
+	_unitsPerCrowd = _waveStructure select 4;
+	_unitsPerSquad = _waveStructure select 5;
 
 	_waveUnits = [];
-
-	// Default values
-	_crowds = 1;
-	_squads = 1;
-	_crowdInfantryTypes = INFANTRY_BASIC;
-	_squadInfantryTypes = INFANTRY_BASIC;	
-	_unitsPerCrowd = 1;
-	_unitsPerSquad = 1;
-
-	// 1 - 5 (14 units)
-	if (_waveNumber <= 5) then {
-		_crowds = 2;
-		_squads = 1;
-		_unitsPerCrowd = 4;
-		_unitsPerSquad = 6;
-	};
-
-	// 5 - 10 (28 units)
-	if (_waveNumber > 5 && _waveNumber <= 10) then {
-		_crowds = 4;
-		_squads = 2;
-		_unitsPerCrowd = 4;
-		_unitsPerSquad = 6;
-	};
-
-	// 10 - 15 (38 units)
-	if (_waveNumber > 10 && _waveNumber <= 15) then {
-		_crowds = 5;
-		_squads = 3;
-		_unitsPerCrowd = 4;
-		_unitsPerSquad = 6;
-	};
-
-	// 15 - 20 (48 units)
-	if (_waveNumber > 15 && _waveNumber <= 20) then {
-		_crowds = 2;
-		_squads = 5;
-		_unitsPerCrowd = 4;
-		_unitsPerSquad = 8;
-	};
-
-	// 20+ (64 units)
-	if (_waveNumber > 20) then {
-		_crowds = 4;
-		_squads = 4;
-		_unitsPerCrowd = 8;
-		_unitsPerSquad = 8;
-	};
 
 	// Create crowds and squads
 	for "_i" from 1 to _crowds do {
@@ -88,6 +46,78 @@ dnct_fnc_createWaveUnits = {
 	};
 
 	_waveUnits
+};
+
+dnct_fnc_getWaveCount = {
+	_attackNumber = param[0, 1];
+
+	_wavesCount = 1;
+	
+	if(_attackNumber > 5 && _attackNumber <= 10) then {
+		_wavesCount = 2;
+	};
+	if(_attackNumber > 10 && _attackNumber <= 15) then {
+		_wavesCount = 4;
+	};
+	if(_attackNumber > 15) then {
+		_wavesCount = 6;
+	};
+
+	_wavesCount
+};
+
+dnct_fnc_getWaveStucture = {
+	_attackNumber = param[0, 1];
+
+	// Default values
+	_crowds = 1;
+	_squads = 1;
+	_crowdInfantryTypes = INFANTRY_BASIC;
+	_squadInfantryTypes = INFANTRY_BASIC;	
+	_unitsPerCrowd = 1;
+	_unitsPerSquad = 1;
+
+	// 1 - 5 (14 units)
+	if (_attackNumber <= 5) then {
+		_crowds = 2;
+		_squads = 1;
+		_unitsPerCrowd = 4;
+		_unitsPerSquad = 6;
+	};
+
+	// 5 - 10 (28 units)
+	if (_attackNumber > 5 && _attackNumber <= 10) then {
+		_crowds = 4;
+		_squads = 2;
+		_unitsPerCrowd = 4;
+		_unitsPerSquad = 6;
+	};
+
+	// 10 - 15 (38 units)
+	if (_attackNumber > 10 && _attackNumber <= 15) then {
+		_crowds = 5;
+		_squads = 3;
+		_unitsPerCrowd = 4;
+		_unitsPerSquad = 6;
+	};
+
+	// 15 - 20 (48 units)
+	if (_attackNumber > 15 && _attackNumber <= 20) then {
+		_crowds = 2;
+		_squads = 5;
+		_unitsPerCrowd = 4;
+		_unitsPerSquad = 8;
+	};
+
+	// 20+ (64 units)
+	if (_attackNumber > 20) then {
+		_crowds = 4;
+		_squads = 4;
+		_unitsPerCrowd = 8;
+		_unitsPerSquad = 8;
+	};
+
+	[_crowds, _squads, _crowdInfantryTypes, _squadInfantryTypes, _unitsPerCrowd, _unitsPerSquad]
 };
 
 dnct_fnc_generateRoster = {

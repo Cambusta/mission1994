@@ -4,7 +4,8 @@ call compile preprocessFileLineNumbers "scripts\assault\waves.sqf";
 
 // Global variables controlling assault state
 assaultActive = true;
-waveNumber = 1;
+attackNumber = 1;
+publicVariable "attackNumber";
 
 dnct_fnc_assault = {
 	_center = param[0, [0,0,0]];
@@ -16,16 +17,23 @@ dnct_fnc_assault = {
 	// Setup pause
 	sleep 10;
 
-	waveNumber = 1;
-	publicVariable "waveNumber";
+	while { assaultActive } do 
+	{	
+		attackNumber spawn dnct_on_attackStart;
 
-	while { assaultActive } do
-	{
-		[_center, waveNumber] call dnct_fnc_wave;		
-		
-		waveNumber = waveNumber + 1;
-		publicVariable "waveNumber";
+		_wavesCount = attackNumber call dnct_fnc_getWaveCount;
+		for "_wave" from 1 to _wavesCount do 
+		{
+			if (_wave > 1) then
+			{ sleep WAVE_DELAY; };
 
-		sleep WAVE_DELAY;
+			[_center, attackNumber, _wave] call dnct_fnc_wave;
+		};
+
+		attackNumber spawn dnct_fnc_evaluateAttackResults;
+		attackNumber = attackNumber + 1; 
+		publicVariable "attackNumber";
+
+		sleep ATTACK_DELAY;
 	};
 };

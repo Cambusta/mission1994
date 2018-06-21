@@ -198,3 +198,17 @@ dnct_fnc_selectWithProbability = {
 
 	_result
 };
+
+dnct_fnc_evaluateAttackResults = {
+	_attackNumber = param[0, 1];
+
+	_completed = false;
+
+	if ([(call BIS_fnc_listPlayers)] call dnct_fnc_hasAlive) then 
+	{ _completed = true; } 
+	else 
+	{ _completed = false; };
+
+	[_attackNumber, true] spawn dnct_on_attackEnd;
+	_completed
+};
