@@ -27,8 +27,63 @@ dnct_fnc_createWaveUnits = {
 	_waveNumber = param[1, 0];
 
 	_waveUnits = [];
-	for "_i" from 1 to _waveNumber do {
-		_units = [_center, INFANTRY_BASIC, 10] call dnct_fnc_createSquad;
+
+	// Default values
+	_crowds = 1;
+	_squads = 1;
+	_crowdInfantryTypes = INFANTRY_BASIC;
+	_squadInfantryTypes = INFANTRY_BASIC;	
+	_unitsPerCrowd = 1;
+	_unitsPerSquad = 1;
+
+	// 1 - 5 (14 units)
+	if (_waveNumber <= 5) then {
+		_crowds = 2;
+		_squads = 1;
+		_unitsPerCrowd = 4;
+		_unitsPerSquad = 6;
+	};
+
+	// 5 - 10 (28 units)
+	if (_waveNumber > 5 && _waveNumber <= 10) then {
+		_crowds = 4;
+		_squads = 2;
+		_unitsPerCrowd = 4;
+		_unitsPerSquad = 6;
+	};
+
+	// 10 - 15 (38 units)
+	if (_waveNumber > 10 && _waveNumber <= 15) then {
+		_crowds = 5;
+		_squads = 3;
+		_unitsPerCrowd = 4;
+		_unitsPerSquad = 6;
+	};
+
+	// 15 - 20 (48 units)
+	if (_waveNumber > 15 && _waveNumber <= 20) then {
+		_crowds = 2;
+		_squads = 5;
+		_unitsPerCrowd = 4;
+		_unitsPerSquad = 8;
+	};
+
+	// 20+ (64 units)
+	if (_waveNumber > 20) then {
+		_crowds = 4;
+		_squads = 4;
+		_unitsPerCrowd = 8;
+		_unitsPerSquad = 8;
+	};
+
+	// Create crowds and squads
+	for "_i" from 1 to _crowds do {
+		_units = [_center, _crowdInfantryTypes, _unitsPerCrowd] call dnct_fnc_createCrowd;
+		_waveUnits append _units;
+	};
+
+	for "_i" from 1 to _squads do {
+		_units = [_center, _squadInfantryTypes, _unitsPerSquad] call dnct_fnc_createSquad;
 		_waveUnits append _units;
 	};
 
