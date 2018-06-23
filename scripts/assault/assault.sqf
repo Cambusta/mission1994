@@ -30,7 +30,11 @@ dnct_fnc_assault = {
 			[_center, attackNumber, _wave] call dnct_fnc_wave;
 		};
 
-		attackNumber spawn dnct_fnc_evaluateAttackResults;
+		_playersHaveSurvived = attackNumber call dnct_fnc_evaluateAttackResults;	
+		if (!_playersHaveSurvived) exitWith { "EveryoneLost" call BIS_fnc_endMissionServer; };
+
+		attackNumber spawn dnct_on_attackEnd;
+
 		attackNumber = attackNumber + 1; 
 		publicVariable "attackNumber";
 

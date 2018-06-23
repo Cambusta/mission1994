@@ -208,7 +208,6 @@ dnct_fnc_evaluateAttackResults = {
 	{ _completed = true; } 
 	else 
 	{ _completed = false; };
-
-	[_attackNumber, true] spawn dnct_on_attackEnd;
+	
 	_completed
 };
