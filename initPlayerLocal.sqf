@@ -1,5 +1,6 @@
+call compile preprocessFileLineNumbers "scripts\resupply\resupply.sqf";
+call compile preprocessFileLineNumbers "scripts\plank\plank_init.sqf";
+
 waitUntil { ! isNull player };
 [] execVM "scripts\snow\goon_snowstorm.sqf";
-
-call compile preprocessFileLineNumbers "scripts\plank\plank_init.sqf";
-[player, [2, 2, 2, 2]] call plank_api_fnc_forceAddFortifications;
+[] call dnct_fnc_initResupply;

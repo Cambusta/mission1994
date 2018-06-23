@@ -8,31 +8,32 @@ class EditorData
 	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=55;
+		nextID=85;
 	};
 	class MarkerIDProvider
 	{
-		nextID=1;
+		nextID=4;
 	};
 	class Camera
 	{
-		pos[]={4676.856,24.707397,4064.4241};
-		dir[]={0.93121684,0.036139388,-0.36300454};
-		up[]={-0.03354229,0.99929506,0.013073163};
-		aside[]={-0.36324891,-2.0517618e-006,-0.9318338};
+		pos[]={4674.7837,41.545155,4088.894};
+		dir[]={0.62771773,-0.74248832,-0.23437476};
+		up[]={0.69554937,0.66976357,-0.25970528};
+		aside[]={-0.34985358,5.1480311e-006,-0.93697071};
 	};
 };
 binarizationWanted=0;
 addons[]=
 {
 	"A3_Ui_F",
-	"FGN_RU_Troops"
+	"FGN_RU_Troops",
+	"A3_Structures_F_Wrecks"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=2;
+		items=3;
 		class Item0
 		{
 			className="A3_Ui_F";
@@ -44,6 +45,13 @@ class AddonsMetaData
 		{
 			className="FGN_RU_Troops";
 			name="FGN_RU_Troops";
+		};
+		class Item2
+		{
+			className="A3_Structures_F_Wrecks";
+			name="Arma 3 - Vehicle Wrecks";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
 		};
 	};
 };
@@ -82,11 +90,11 @@ class Mission
 	};
 	class Entities
 	{
-		items=2;
+		items=4;
 		class Item0
 		{
 			dataType="Marker";
-			position[]={4678.3193,18.515499,4068.8826};
+			position[]={4671.8955,18.806114,4078.4211};
 			name="besiegedLocation";
 			type="Empty";
 			id=52;
@@ -121,6 +129,32 @@ class Mission
 			};
 			id=31;
 			atlOffset=3.0517578e-005;
+		};
+		class Item2
+		{
+			dataType="Marker";
+			position[]={4689.8623,18.909389,4082.5991};
+			name="respawn_east";
+			type="Empty";
+			id=66;
+			atlOffset=-0.031454086;
+		};
+		class Item3
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={4697.1152,19.82868,4081.8411};
+				angles[]={0.0067893309,5.6537676,0.0045727626};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="resupplyObject";
+			};
+			id=84;
+			type="Land_Wreck_BMP2_F";
 		};
 	};
 };

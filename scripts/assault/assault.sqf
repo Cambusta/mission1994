@@ -1,6 +1,7 @@
 call compile preprocessFileLineNumbers "scripts\assault\events.sqf";
 call compile preprocessFileLineNumbers "scripts\assault\helpers.sqf";
 call compile preprocessFileLineNumbers "scripts\assault\waves.sqf";
+call compile preprocessFileLineNumbers "scripts\resupply\resupply_server.sqf";
 
 // Global variables controlling assault state
 assaultActive = true;
@@ -37,6 +38,7 @@ dnct_fnc_assault = {
 
 		attackNumber = attackNumber + 1; 
 		publicVariable "attackNumber";
+		1000 call dnct_fnc_addResupplyPoints;
 
 		sleep ATTACK_DELAY;
 	};
