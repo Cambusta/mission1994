@@ -8,14 +8,14 @@ dnct_fnc_initResupply = {
 
 	resupplyObject addAction[
 		"Resupply"
-		,{ 0 = [] spawn dnct_fnc_showResupplyDialog; }
-		,nil
-		,1.5
-		,false
-		,true
-		,""
-		,"true"
-		,5
-		,false
+		,{ 0 = _this spawn dnct_fnc_showResupplyDialog; }
+		,nil 		// arguments
+		,1.5		// priority
+		,false		// showWindow
+		,true		// hideOnUse
+		,""			// shortcut
+		,"true"		// condition
+		,5			// radius
+		,false		// unconscious
 	];
 };

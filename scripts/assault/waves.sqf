@@ -14,7 +14,7 @@ dnct_fnc_wave = {
 	while { [_createdUnits] call dnct_fnc_hasAlive && [(call BIS_fnc_listPlayers)] call dnct_fnc_hasAlive } do 
 	{
 		sleep 15;
-		{ _x spawn dnct_fnc_assignGroupSADWaypoint; } foreach call dnct_fnc_getEnemyGroups;
+		{ _x spawn dnct_fnc_assignGroupTarget; } foreach call dnct_fnc_getEnemyGroups;
 	};
 
 	[_attackNumber, _waveNumber] spawn dnct_on_waveEnd;
@@ -143,7 +143,7 @@ dnct_fnc_createSquad = {
 	_roster = [_unitClasses, _unitCount] call dnct_fnc_generateRoster;
 	_squad = [_location, ENEMY_SIDE, _roster] call BIS_fnc_spawnGroup;
 	_squad allowFleeing 0;
-	_squad spawn dnct_fnc_assignGroupSADWaypoint; 
+	_squad spawn dnct_fnc_assignGroupTarget; 
 
 	_units = units _squad;
 	_units
@@ -171,7 +171,7 @@ dnct_fnc_createCrowd = {
 		};
 
 		_group allowFleeing 0;
-		_group spawn dnct_fnc_assignGroupSADWaypoint;
+		_group spawn dnct_fnc_assignGroupTarget;
 		_crowd pushBack _unit;
 	} foreach _roster;
 

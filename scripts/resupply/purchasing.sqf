@@ -1,4 +1,11 @@
 dnct_fnc_showResupplyDialog = {
+	_target = param[0, objNull];
+	_caller = param[1, objNull];
+	_id = param[2, -1];
+	_arguments = param[3, []];
+
+	if (damage _target == 1) exitWith { hint "Uniable to request resupplies - the radio is destroyed."; };
+
 	[
 		[0, "HEADER", "Resupplying"]
 		, [1, "LABEL", "Available supply points:"]
@@ -6,7 +13,7 @@ dnct_fnc_showResupplyDialog = {
 		
 		, [2, "DROPDOWN", ["Short sandbag wall (50sp)", "Long sandbag wall (100sp)", "Round sandbag wall (150sp)", "Corner sandbag wall (25sp)"], [50, 100, 150, 25]]
 		
-		, [3, "LABEL", "         "]
+		, [3, "LABEL", ""]
 
 		, [4, "BUTTON", "Purchase", { 
 			private _dropDownInput = _this select 0;
