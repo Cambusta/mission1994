@@ -11,26 +11,7 @@ dnct_fnc_showResupplyDialog = {
 		, [1, "LABEL", "Available supply points:"]
 		, [1, "LABEL", str(supplyPoints)]
 		
-		, [2, "DROPDOWN", 
-						["Short sandbag wall (50sp)"
-						,"Long sandbag wall (100sp)"
-						,"Round sandbag wall (150sp)"
-						,"Corner sandbag wall (25sp)"
-						,"Artillery: Flare (25sp)"
-						,"Artillery: Smoke (150sp)"
-						,"Artillery: HE (250sp)"
-						,"Artillery: Grad (1000sp)"]
-						, 
-						[50		// 0. Short sandbag wall
-						,100	// 1. Long sandbage wall
-						,150	// 2. Round sandbag wall
-						,25		// 3. Corner sandbag wall						
-						,25		// 4. Flare
-						,150	// 5. Smoke
-						,250	// 6. HE
-						,1000	// 7. Grad
-						]				
-			]
+		, [2, "DROPDOWN", PDO_NAMES, PDO_COSTS]
 		
 		, [3, "LABEL", ""]
 
@@ -53,10 +34,10 @@ dnct_fnc_purchase = {
 		_itemCost spawn dnct_fnc_deductResupplyPoints;
 
 		switch (_selectedItem) do {
-			case 0: { [player, [1, 0, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
-			case 1: { [player, [0, 1, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
-			case 2: { [player, [0, 0, 1, 0]] spawn plank_api_fnc_forceAddFortifications; };
-			case 3: { [player, [0, 0, 0, 1]] spawn plank_api_fnc_forceAddFortifications; };
+			case 0: { ["SHORT"] call dnct_fnc_resupplySandbags; };
+			case 1: { ["LONG"] call dnct_fnc_resupplySandbags; };
+			case 2: { ["ROUND"] call dnct_fnc_resupplySandbags; };
+			case 3: { ["CORNER"] call dnct_fnc_resupplySandbags; };
 			case 4: { 0 = ["ILLUM"] spawn dnct_fnc_resupplyArtillery; };
 			case 5: { 0 = ["SMOKE"] spawn dnct_fnc_resupplyArtillery; };
 			case 6: { 0 = ["HE"] spawn dnct_fnc_resupplyArtillery; };

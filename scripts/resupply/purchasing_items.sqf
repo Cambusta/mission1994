@@ -1,8 +1,20 @@
+dnct_fnc_resupplySandbags = {
+	_type = param[0, "SHORT"];
+
+	switch (_type) do {
+		case "SHORT": 	{ [player, [1, 0, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
+		case "LONG":	{ [player, [0, 1, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
+		case "ROUND":	{ [player, [0, 0, 1, 0]] spawn plank_api_fnc_forceAddFortifications; };
+		case "CORNER":	{ [player, [0, 0, 0, 1]] spawn plank_api_fnc_forceAddFortifications; };
+		default			{ hint "Resupply system error: invalid sandbag type @ dnct_fnc_resupplySandbags"; };
+	};
+};
+
 dnct_fnc_resupplyArtillery = {
 	_shell = param[0, "HE"];
 
 	_center = getMarkerPos "besiegedLocation";
-	_position =[_center, 0, 1000] call BIS_fnc_findSafePos;	
+	_position = [_center, 0, 1000] call BIS_fnc_findSafePos;	
 	_roundClassname = "rhs_ammo_3WOF27";
 	_ammoCount = 4 + round(random 10);
 
@@ -10,7 +22,7 @@ dnct_fnc_resupplyArtillery = {
 		case "HE" :		{ _roundClassname = "rhs_ammo_3WOF27"; };
 		case "SMOKE":	{ _roundClassname = "rhs_ammo_53WD546U"; };
 		case "ILLUM":	{ _roundClassname = "rhs_ammo_3WS23"; _ammoCount = 2; };
-		case "GRAD":	{ _roundClassname = "rhs_ammo_m210F_HE"; _ammoCount = 40; };
+		case "GRAD":	{ _roundClassname = "rhs_ammo_m21OF_HE"; _ammoCount = 40; };
 		default 		{ hint "Resupply system error: invalid artillery round type @ dnct_fnc_resupplyArtillery"; };
 	};
 
@@ -29,10 +41,8 @@ dnct_fnc_resupplyArtillery = {
 		0 = [_pos, _roundClassname, _ammoCount] spawn {
 			params["_position", "_roundClassname", "_ammoCount"];
 			_postionDescription = [_position, "CIRCLE", 0, 100];		
-			
-			player sideChat _roundClassname;
 
-			sleep 1;
+			sleep 60 + round (random 60);
 
 			[_postionDescription, _roundClassname, 1, _ammoCount] spawn dzn_fnc_StartVirtualFiremission;
 		};

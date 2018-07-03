@@ -1,4 +1,5 @@
-call compile preprocessFileLineNumbers "scripts\resupply\resupply_options.sqf";
+call compile preprocessFileLineNumbers "resources\purchase_dlg_options.sqf";
+call compile preprocessFileLineNumbers "scripts\resupply\purchasing_items.sqf";
 call compile preprocessFileLineNumbers "scripts\resupply\purchasing.sqf";
 
 supplyPoints = 0;

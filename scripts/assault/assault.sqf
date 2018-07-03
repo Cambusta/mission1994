@@ -38,7 +38,7 @@ dnct_fnc_assault = {
 
 		attackNumber = attackNumber + 1; 
 		publicVariable "attackNumber";
-		1000 call dnct_fnc_addResupplyPoints;
+		WAVE_SP_REWARD call dnct_fnc_addResupplyPoints;
 
 		sleep ATTACK_DELAY;
 	};
