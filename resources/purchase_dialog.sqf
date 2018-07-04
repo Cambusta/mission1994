@@ -48,4 +48,11 @@ PDO_COSTS = [PDO_SANDBAG_SHORT_COST
 			,PDO_ARTY_SMOKE_COST
 			,PDO_ARTY_HE_COST
 			,PDO_ARTY_GRAD_COST	
-			];	
+			];
+
+
+// String resources
+PD_STR_HEADER = "Resupplying";
+PD_STR_AVAILABLE_SUPPLY_POINTS = "<t font='PuristaBold'>Available supply points:</t>";
+PD_STR_SElECT_SUPPLY_OPTION = "<t font='PuristaBold'>Select supply option:</t>";
+PD_STR_PURCHASE_BUTTON = "<t font='PuristaBold'>Purchase</t>";

@@ -7,20 +7,25 @@ dnct_fnc_showResupplyDialog = {
 	if (damage _target == 1) exitWith { hint "Uniable to request resupplies - the radio is destroyed."; };
 
 	[
-		[0, "HEADER", "Resupplying"]
-		, [1, "LABEL", "Available supply points:"]
+		[0, "HEADER", PD_STR_HEADER]
+		, [1, "LABEL", PD_STR_AVAILABLE_SUPPLY_POINTS]
 		, [1, "LABEL", str(supplyPoints)]
 		
-		, [2, "DROPDOWN", PDO_NAMES, PDO_COSTS]
-		
-		, [3, "LABEL", ""]
+		, [2, "LABEL", ""]
 
-		, [4, "BUTTON", "Purchase", { 
+		, [3, "LABEL", PD_STR_SElECT_SUPPLY_OPTION]
+
+		, [4, "DROPDOWN", PDO_NAMES, PDO_COSTS]
+
+		, [5, "LABEL", ""]
+
+		, [6, "BUTTON", PD_STR_PURCHASE_BUTTON, { 
 			private _dropDownInput = _this select 0;
 			private _selectedItem = _dropDownInput select 0;
 			private _itemCost = _dropDownInput select 3; 
+			private _itemName = _dropDownInput select 1;
 
-			[_selectedItem, _itemCost] call dnct_fnc_purchase;
+			[_selectedItem, _itemCost, _itemName] call dnct_fnc_purchase;
 			closeDialog 2;
 		}]
 	] call dzn_fnc_ShowAdvDialog;
@@ -29,9 +34,12 @@ dnct_fnc_showResupplyDialog = {
 dnct_fnc_purchase = {
 	_itemIndex = param[0, 0];
 	_itemCost = param[1, 0];
+	_itemName = param[2, ""];
 
 	if (_itemCost <= supplyPoints) then {
 		_itemCost spawn dnct_fnc_deductResupplyPoints;
+
+		hint format["%1 has been bought.", _itemName];
 
 		switch (_selectedItem) do {
 			case 0: { ["SHORT"] call dnct_fnc_resupplySandbags; };

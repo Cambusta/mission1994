@@ -1,4 +1,4 @@
-call compile preprocessFileLineNumbers "resources\purchase_dlg_options.sqf";
+call compile preprocessFileLineNumbers "resources\purchase_dialog.sqf";
 call compile preprocessFileLineNumbers "scripts\resupply\purchasing_items.sqf";
 call compile preprocessFileLineNumbers "scripts\resupply\purchasing.sqf";
 
