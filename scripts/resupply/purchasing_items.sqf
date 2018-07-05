@@ -6,7 +6,7 @@ dnct_fnc_resupplySandbags = {
 		case "LONG":	{ [player, [0, 1, 0, 0, 0, 0, 0, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
 		case "ROUND":	{ [player, [0, 0, 1, 0, 0, 0, 0, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
 		case "CORNER":	{ [player, [0, 0, 0, 1, 0, 0, 0, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
-		default			{ hint "Resupply system error: invalid sandbag type @ dnct_fnc_resupplySandbags"; };
+		default		    { hint "Resupply system error: invalid sandbag type @ dnct_fnc_resupplySandbags"; };
 	};
 };
 
@@ -19,7 +19,7 @@ dnct_fnc_resupplyCrate = {
 		case "AMMO":		{ [player, [0, 0, 0, 0, 0, 0, 1, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
 		case "LAUNCHER":	{ [player, [0, 0, 0, 0, 0, 0, 0, 1, 0]] spawn plank_api_fnc_forceAddFortifications; };
 		case "SPECIALW":	{ [player, [0, 0, 0, 0, 0, 0, 0, 0, 1]] spawn plank_api_fnc_forceAddFortifications; }; 
-		default				{ hint "Resupply system error: invalid crate type @ dnct_fnc_resupplyCrate"; };
+		default			    { hint "Resupply system error: invalid crate type @ dnct_fnc_resupplyCrate"; };
 	};
 };
 
@@ -32,11 +32,11 @@ dnct_fnc_resupplyArtillery = {
 	_ammoCount = 4 + round(random 10);
 
 	switch (_shell) do {
-		case "HE" :		{ _roundClassname = "rhs_ammo_3WOF27"; };
+		case "HE" :	    { _roundClassname = "rhs_ammo_3WOF27"; };
 		case "SMOKE":	{ _roundClassname = "rhs_ammo_53WD546U"; };
 		case "ILLUM":	{ _roundClassname = "rhs_ammo_3WS23"; _ammoCount = 2; };
 		case "GRAD":	{ _roundClassname = "rhs_ammo_m21OF_HE"; _ammoCount = 40; };
-		default 		{ hint "Resupply system error: invalid artillery round type @ dnct_fnc_resupplyArtillery"; };
+		default 	    { hint "Resupply system error: invalid artillery round type @ dnct_fnc_resupplyArtillery"; };
 	};
 
 	// I might not be going to hell for the code in the next few lines but I'll sure get that condemning glance from Saint Peter
