@@ -46,10 +46,15 @@ dnct_fnc_purchase = {
 			case 1: { ["LONG"] call dnct_fnc_resupplySandbags; };
 			case 2: { ["ROUND"] call dnct_fnc_resupplySandbags; };
 			case 3: { ["CORNER"] call dnct_fnc_resupplySandbags; };
-			case 4: { 0 = ["ILLUM"] spawn dnct_fnc_resupplyArtillery; };
-			case 5: { 0 = ["SMOKE"] spawn dnct_fnc_resupplyArtillery; };
-			case 6: { 0 = ["HE"] spawn dnct_fnc_resupplyArtillery; };
-			case 7: { 0 = ["GRAD"] spawn dnct_fnc_resupplyArtillery; };
+			case 4: { ["3YA40"] call dnct_fnc_resupplyCrate; };
+			case 5: { ["7YA37"] call dnct_fnc_resupplyCrate; };
+			case 6: { ["AMMO"] call dnct_fnc_resupplyCrate; };
+			case 7: { ["LAUNCHER"] call dnct_fnc_resupplyCrate; };
+			case 8: { ["SPECIALW"] call dnct_fnc_resupplyCrate; };
+			case 9: { 0 = ["ILLUM"] spawn dnct_fnc_resupplyArtillery; };
+			case 10: { 0 = ["SMOKE"] spawn dnct_fnc_resupplyArtillery; };
+			case 11: { 0 = ["HE"] spawn dnct_fnc_resupplyArtillery; };
+			case 12: { 0 = ["GRAD"] spawn dnct_fnc_resupplyArtillery; };
 		};
 	} else {
 		hint "Not enough supply points.";

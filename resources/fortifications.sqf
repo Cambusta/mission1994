@@ -18,6 +18,10 @@ plank_deploy_fortData = [
 ["Sandbag wall (short)",                "Land_BagFence_Short_F",                4,              0,                	360,            {}],
 ["Sandbag wall (long)",                 "Land_BagFence_Long_F",                 4,            	0,                	360,            {}],
 ["Sandbag wall (round)",                "Land_BagFence_Round_F",                4,            	180,               	360,            {}],
-["Sandbag wall (corner)",               "Land_BagFence_Corner_F",               4,            	0,                	360,            {}]
-
+["Sandbag wall (corner)",               "Land_BagFence_Corner_F",               4,            	0,                	360,            {}],
+["3YA40 crate",							"rhs_3Ya40_1_single",					1,				0,					360,			{}],
+["7YA37 crate",							"rhs_7ya37_1_single",					1,				0,					360,			{}],
+["Ammo crate",							"rhs_mags_crate",						1,				0,					360,			{}],
+["Launcher crate",						"rhs_launcher_crate",					1,				0,					360,			{}],
+["Special weapons crate",				"rhs_spec_weapons_crate",				1,				0,					360,			{}]
 ];

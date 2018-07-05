@@ -2,11 +2,24 @@ dnct_fnc_resupplySandbags = {
 	_type = param[0, "SHORT"];
 
 	switch (_type) do {
-		case "SHORT": 	{ [player, [1, 0, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
-		case "LONG":	{ [player, [0, 1, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
-		case "ROUND":	{ [player, [0, 0, 1, 0]] spawn plank_api_fnc_forceAddFortifications; };
-		case "CORNER":	{ [player, [0, 0, 0, 1]] spawn plank_api_fnc_forceAddFortifications; };
+		case "SHORT": 	{ [player, [1, 0, 0, 0, 0, 0, 0, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
+		case "LONG":	{ [player, [0, 1, 0, 0, 0, 0, 0, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
+		case "ROUND":	{ [player, [0, 0, 1, 0, 0, 0, 0, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
+		case "CORNER":	{ [player, [0, 0, 0, 1, 0, 0, 0, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
 		default			{ hint "Resupply system error: invalid sandbag type @ dnct_fnc_resupplySandbags"; };
+	};
+};
+
+dnct_fnc_resupplyCrate = {
+	_type = param[0, "3YA40"];
+
+	switch (_type) do {
+		case "3YA40": 		{ [player, [0, 0, 0, 0, 1, 0, 0, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
+		case "7YA37":		{ [player, [0, 0, 0, 0, 0, 1, 0, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
+		case "AMMO":		{ [player, [0, 0, 0, 0, 0, 0, 1, 0, 0]] spawn plank_api_fnc_forceAddFortifications; };
+		case "LAUNCHER":	{ [player, [0, 0, 0, 0, 0, 0, 0, 1, 0]] spawn plank_api_fnc_forceAddFortifications; };
+		case "SPECIALW":	{ [player, [0, 0, 0, 0, 0, 0, 0, 0, 1]] spawn plank_api_fnc_forceAddFortifications; }; 
+		default				{ hint "Resupply system error: invalid crate type @ dnct_fnc_resupplyCrate"; };
 	};
 };
 

@@ -16,7 +16,7 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=19;
+		nextID=24;
 	};
 	class Camera
 	{
@@ -9379,7 +9379,7 @@ class Mission
 					name="FireHouse_11";
 					id=232;
 					type="ModuleEffectsFire_F";
-					atlOffset=16.063396;
+					atlOffset=16.063316;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -14546,6 +14546,7 @@ class Mission
 					name="FireForest1";
 					id=265;
 					type="ModuleEffectsFire_F";
+					atlOffset=-7.6293945e-006;
 					class CustomAttributes
 					{
 						class Attribute0
